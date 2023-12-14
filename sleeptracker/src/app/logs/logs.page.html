@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectedSegment">
+      <ion-segment-button value="sleep">
+        <ion-label>Sleep</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="sleepiness">
+        <ion-label>Sleepiness</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Sleep Tracker</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="selectedSegment === 'sleep'">
+    <!-- Display Sleep Data -->
+    <div *ngFor="let sleepData of allOvernightData; index as i">
+      <div *ngIf="i > 1">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Slept For</ion-card-title>
+          <ion-card-subtitle>{{ sleepData.summaryString() }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+        Start: {{ sleepData.sleepStart }}
+        </ion-card-content>
+        <ion-card-content>
+        End {{ sleepData.sleepEnd }}
+         </ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedSegment === 'sleepiness'">
+    <!-- Display Sleepiness Data -->
+    <div *ngFor="let sleepinessData of allSleepinessData; index as i">
+      <div *ngIf="i !== 0">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ sleepinessData.summaryString() }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Logged at: {{ sleepinessData.loggedAt }}
+        </ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [routerLink]="['/home']">
+      <ion-icon name="home"></ion-icon>
+      Home
+    </ion-tab-button>
+    <ion-tab-button tab="logs">
+      <ion-icon name="stats-chart-outline"></ion-icon>
+      Logs
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
